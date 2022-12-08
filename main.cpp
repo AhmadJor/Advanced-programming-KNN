@@ -7,7 +7,8 @@
 #include "Chebyshev.h"
 #include "Canberra.h"
 #include "Minkowski.h"
-
+#include "Flower.h"
+#include <map>
 using namespace std;
 
 vector<string> split(string str, char delim) {
@@ -24,26 +25,42 @@ vector<string> split(string str, char delim) {
     arr.push_back(temp);
     return arr;
 }
-vector<float> convert(vector<string> arr){
+Flower convert(vector<string> arr){
     vector<float> v1;
+    for (int i = 0; i < arr.size()-1; ++i) {
+        v1.push_back(atof(arr[i].c_str()));
+    }
+    Flower flower = Flower(arr[arr.size()-1],v1);
+    return flower;
+}
+
+vector<Flower> read(const string path){
+    vector<Flower> result;
+    fstream  file;
+    file.open(path,ios:: in);
+    if (!file) cout << "No such file";
+    string line;
+    while (getline(file,line)){
+       Flower temp = convert(split(line,','));
+        result.push_back(temp);
+    }
+    return result;
+}
+vector<float> getFloatVector() {
+    vector<float> v1;
+    string buffer;
+    float data;
+    //inputs line
+    getline(cin, buffer);
+
+    //splits line and inputs into vector
+    vector<string> arr = split(buffer, ' ');
     for (int i = 0; i < arr.size(); ++i) {
         v1.push_back(atof(arr[i].c_str()));
     }
     return v1;
 }
 
-vector<vector<float>> read(const string path){
-    vector<vector<float>> result;
-    fstream  file;
-    file.open(path,ios:: in);
-    if (!file) cout << "No such file";
-    string line;
-    while (getline(file,line)){
-       vector<float> temp = convert(split(line,','));
-        result.push_back(temp);
-    }
-    return result;
-}
 
 int main(int argc , char** argv){
 int k = atoi(argv[1]);
@@ -64,8 +81,29 @@ DistanceFunction* function;
         cout << "Distance Function does not exist"<<endl;
         return 0;
     }
-    vector<vector<float>> result = read("/datasets/" + file);
+    vector<Flower> result_classified = read("datasets/iris/" + file);
+    map<float,string> distances;
+    map<string,int> kth_elements;
+    vector<float> get = getFloatVector();
+    for (int i = 0; i < result_classified.size(); ++i) {
+        float distance =function->Distance(result_classified[i].getMeasures(),get);
+        distances.insert(pair<float,string> (distance,result_classified[i].getName()));
+    }
 
+    for (int i = 0; i < k; ++i) {
+        if (distances.count(distances.begin()->first) == 0)
+        kth_elements[distances.begin()->second] = 1;
+        else
+            kth_elements[distances.begin()->second] += 1;
+        distances.erase(distances.begin()->first);
+
+    }
+    pair<string,int> max = *kth_elements.begin();
+    for (int i = 0; i < kth_elements.size(); ++i) {
+        if (max.second<kth_elements.begin()->second)
+            max = *kth_elements.begin();
+    }
+   cout<< max.first << endl;
 
     return 0;
 }
