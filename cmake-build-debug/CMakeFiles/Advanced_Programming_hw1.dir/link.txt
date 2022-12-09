@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2021.2.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Advanced_Programming_hw1.dir/objects.a
+C:\PROGRA~2\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin\ar.exe cr CMakeFiles\Advanced_Programming_hw1.dir/objects.a @CMakeFiles\Advanced_Programming_hw1.dir\objects1.rsp
+C:\PROGRA~2\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Advanced_Programming_hw1.dir/objects.a -Wl,--no-whole-archive -o Advanced_Programming_hw1.exe -Wl,--out-implib,libAdvanced_Programming_hw1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Advanced_Programming_hw1.dir\linklibs.rsp
