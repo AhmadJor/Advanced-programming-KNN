@@ -9,6 +9,7 @@
 #include "Minkowski.h"
 #include "Object.h"
 #include <map>
+#include <string>
 
 using namespace std;
 
@@ -32,8 +33,8 @@ Object convert(vector<string> arr) {
     for (int i = 0; i < arr.size() - 1; ++i) {
         v1.push_back(atof(arr[i].c_str()));
     }
-    Object flower = Object(arr[arr.size() - 1], v1);
-    return flower;
+    Object object = Object(arr[arr.size() - 1], v1);
+    return object;
 }
 
 vector<Object> read(const string path) {
@@ -43,7 +44,8 @@ vector<Object> read(const string path) {
     if (!file) cout << "No such file";
     string line;
     while (getline(file, line)) {
-        Object temp = convert(split(line, ','));
+        vector<string> splitted = split(line, ',');
+        Object temp = convert(splitted);
         result.push_back(temp);
     }
     return result;

@@ -12,7 +12,7 @@ private:
     string name;
     vector<float> data;
 public:
-    Object(string name, vector<float> measures): name(name), data(data){}
+    Object(string name, vector<float> data): name(name), data(data){}
     const string &getName() const;
     const vector<float> &getData() const;
 };
