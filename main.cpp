@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
     string distance = argv[3];
     DistanceFunction *distanceFunction = GetDistanceFunction(distance);
 
-    vector<Object> classified = read("datasets/iris/" + file);
+    vector<Object> classified = read(file);
     vector<float> inputVector = getFloatVector(cin);
     map<float, string> distances = CalculateDistances(distanceFunction, classified, inputVector);
     map<string, int> closestK = CountKClosestObjects(k, distances);
