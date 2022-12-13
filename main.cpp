@@ -41,7 +41,11 @@ vector<Object> read(const string path) {
     vector<Object> result;
     fstream file;
     file.open(path, ios::in);
-    if (!file) cout << "No such file";
+    if (!file) {
+        cout << "No such file";
+        exit(1);
+    }
+
     string line;
     while (getline(file, line)) {
         vector<string> splitted = split(line, ',');
@@ -124,21 +128,26 @@ string GetMaximumOccurrences(map<string, int> closestK) {
 
 int main(int argc, char **argv) {
     int k = atoi(argv[1]);
+    if (k == 0) {
+        cout << "Error in K input" << endl;
+        return 0;
+    }
+
     string file = argv[2];
     string distance = argv[3];
     DistanceFunction *distanceFunction = GetDistanceFunction(distance);
     vector<Object> classified = read(file);
     //check if read empty:
-    if(classified.empty()) {
+    if (classified.empty()) {
         cout << "File is either empty, or there was an error reading it." << endl;
         return 0;
     }
 
-    while(true) {
+    while (true) {
         vector<float> inputVector = getFloatVector(cin);
 
         //check if vector of correct size
-        if(inputVector.size() != classified[0].getData().size()){
+        if (inputVector.size() != classified[0].getData().size()) {
             cout << "Vector of incorrect size" << endl;
             continue;
         }
