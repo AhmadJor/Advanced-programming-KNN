@@ -127,13 +127,27 @@ int main(int argc, char **argv) {
     string file = argv[2];
     string distance = argv[3];
     DistanceFunction *distanceFunction = GetDistanceFunction(distance);
-
     vector<Object> classified = read(file);
-    vector<float> inputVector = getFloatVector(cin);
-    map<float, string> distances = CalculateDistances(distanceFunction, classified, inputVector);
-    map<string, int> closestK = CountKClosestObjects(k, distances);
-    string name = GetMaximumOccurrences(closestK);
+    //check if read empty:
+    if(classified.empty()) {
+        cout << "File is either empty, or there was an error reading it." << endl;
+        return 0;
+    }
 
-    cout << name << endl;
+    while(true) {
+        vector<float> inputVector = getFloatVector(cin);
+
+        //check if vector of correct size
+        if(inputVector.size() != classified[0].getData().size()){
+            cout << "Vector of incorrect size" << endl;
+            continue;
+        }
+
+        map<float, string> distances = CalculateDistances(distanceFunction, classified, inputVector);
+        map<string, int> closestK = CountKClosestObjects(k, distances);
+        string name = GetMaximumOccurrences(closestK);
+
+        cout << name << endl;
+    }
     return 0;
 }
