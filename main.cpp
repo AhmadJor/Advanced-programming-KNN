@@ -144,7 +144,6 @@ int main(int argc, char **argv) {
 
     string file = argv[2];
     string distance = argv[3];
-    DistanceFunction *distanceFunction = GetDistanceFunction(distance);
     vector<Object> classified = read(file);
     //check if read empty:
     if (classified.empty()) {
@@ -152,9 +151,9 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    DistanceFunction *distanceFunction = GetDistanceFunction(distance);
     while (true) {
         vector<float> inputVector = getFloatVector(cin);
-
         //check if vector of correct size
         if (inputVector.size() != classified[0].getData().size()) {
             cout << "Vector of incorrect size" << endl;
@@ -167,5 +166,7 @@ int main(int argc, char **argv) {
 
         cout << name << endl;
     }
+
+    delete distanceFunction;
     return 0;
 }
