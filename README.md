@@ -4,7 +4,7 @@
 
 ```commandline
 make
-./a.out 3 iris_classified.csv MAN
+./a.out 3 datasets/iris/iris_classified.csv MAN
 ```
 
 <h1> Implementation</h1>
