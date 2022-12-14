@@ -42,13 +42,22 @@ vector<Object> read(const string path) {
     fstream file;
     file.open(path, ios::in);
     if (!file) {
-        cout << "No such file";
+        cout << "No such file" << endl;
         exit(1);
     }
 
+    int lineSize = -1;
     string line;
     while (getline(file, line)) {
         vector<string> splitted = split(line, ',');
+        if (lineSize == -1)
+            lineSize = splitted.size();
+        else {
+            if (splitted.size() != lineSize){
+                cout << "Error reading file" << endl;
+                exit(1);
+            }
+        }
         Object temp = convert(splitted);
         result.push_back(temp);
     }
