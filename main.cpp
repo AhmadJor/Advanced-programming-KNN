@@ -127,10 +127,11 @@ map<string, int> CountKClosestObjects(int k, map<float, string> distances) {
 //returns maximum occurred name in closestK (map<string, int> = <name, numOccurrences>)
 string GetMaximumOccurrences(map<string, int> closestK) {
     pair<string, int> max = *closestK.begin();
+    closestK.erase(closestK.begin()->first);
     for (int i = 0; i < closestK.size(); ++i) {
-        closestK.erase(closestK.begin()->first);
         if (max.second < closestK.begin()->second)
             max = *closestK.begin();
+        closestK.erase(closestK.begin()->first);
     }
     return max.first;
 }
